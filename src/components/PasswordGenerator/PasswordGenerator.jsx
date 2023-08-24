@@ -9,14 +9,16 @@ function PasswordGenerator() {
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeAlphabets, setIncludeAlphabets] = useState(true);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
-  const [copiedMessage, setCopiedMessage] = useState("");  // set a message to display when user copied password to clipboard
+  const [copiedMessage, setCopiedMessage] = useState(""); // set a message to display when user copied password to clipboard
 
   const generateNewPassword = () => {
     // create config to generate password according to fields selected by user
     const config = [
       ...(includeNumbers ? [secureRandomPassword.digits] : []),
-      ...(includeAlphabets ? [secureRandomPassword.upper, secureRandomPassword.lower] : []),
-      ...(includeSpecialChars ? [secureRandomPassword.symbols] : [])
+      ...(includeAlphabets
+        ? [secureRandomPassword.upper, secureRandomPassword.lower]
+        : []),
+      ...(includeSpecialChars ? [secureRandomPassword.symbols] : []),
     ];
 
     const options = {
@@ -28,7 +30,7 @@ function PasswordGenerator() {
   };
 
   const copyToClipboard = () => {
-    clipboardCopy(password);  // copy the password to clipboard using clipboard-copy library
+    clipboardCopy(password); // copy the password to clipboard using clipboard-copy library
     setCopiedMessage("Password copied to clipboard!");
     setTimeout(() => setCopiedMessage(""), 1000); // Clear the message after 1 seconds
   };
@@ -94,6 +96,11 @@ function PasswordGenerator() {
             </div>
           </div>
         </div>
+        {!includeAlphabets && !includeNumbers && !includeSpecialChars && (
+          <div className={styles.EmptySelectionNote}>
+            Please select at least one option to generate a password.
+          </div>
+        )}
         <button
           onClick={generateNewPassword}
           disabled={

@@ -25,11 +25,19 @@ function PasswordList({ currentPassword }) {
     <div className={styles.PasswordList}>
       <div className={styles.PasswordListHeading}>Previous Passwords</div>
       <div className={styles.PreviousPasswordList}>
-        <ul>
-          {previousPasswords.map((password, index) => (
-            <li key={index}>{password}</li>
-          ))}
-        </ul>
+        {previousPasswords.length === 0 ? (
+          <div className={styles.EmptyPreviousPasswordNote}>
+            No previous passwords found.
+          </div>
+        ) : (
+          <>
+            <ul>
+              {previousPasswords.map((password, index) => (
+                <li key={index}>{password}</li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );
